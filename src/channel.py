@@ -1,4 +1,5 @@
 import os
+import json
 from googleapiclient.discovery import build
 
 api_key: str = os.getenv('YT_API_KEY')
@@ -16,9 +17,5 @@ class Channel:
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
-        self.channel_data = channel['items'][0]
-        print(f"название канала: {self.channel_data['snippet']['title']}")
-        print(f"Описание: {self.channel_data['snippet']['description']}")
-        print(f"Колличество подписчиков: {self.channel_data['statistics']['subscriberCount']}")
-        print(f"Колличество просмотров: {self.channel_data['statistics']['viewCount']}")
-        print(f"Дата создания: {self.channel_data['snippet']['publishedAt']}")
+        print(json.dumps(channel, indent=2, ensure_ascii=False))
+
