@@ -6,6 +6,7 @@ api_key: str = os.getenv('YT_API_KEY')
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 
+
 class Channel:
     """Класс для ютуб-канала"""
 
@@ -44,9 +45,13 @@ class Channel:
     def __eq__(self, other):
         return self.subscriberCount == other.subscriberCount
 
+
+    @property
+    def channel_id(self):
+        return self.__channel_id()
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        channel = youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
     @classmethod
@@ -55,7 +60,7 @@ class Channel:
         return service
 
     def to_json(self, title):
-        file_json = Channel.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        file_json = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         with open(title, "w", encoding="UTF-8") as file:
             json.dump(file_json, file)
 
