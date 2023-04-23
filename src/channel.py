@@ -41,6 +41,8 @@ class Channel:
     def __ge__(self, other):
         return self.subscriberCount >= other.subscriberCount
 
+    def __eq__(self, other):
+        return self.subscriberCount == other.subscriberCount
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
