@@ -6,7 +6,6 @@ api_key: str = os.getenv('YT_API_KEY')
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 
-
 class Channel:
     """Класс для ютуб-канала"""
 
@@ -49,6 +48,7 @@ class Channel:
     @property
     def channel_id(self):
         return self.__channel_id()
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         channel = youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
